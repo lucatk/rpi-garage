@@ -1,0 +1,14 @@
+{
+  "name": "rpi-garage",
+  "version": "1.0.0",
+  "description": "433mhz Garagenoeffner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lucatk",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
