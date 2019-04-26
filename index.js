@@ -23,8 +23,10 @@ app.post('/open/:id', (req, res) => {
             return rfEmitter.sendCode(code)
             .then((result) => {
                 console.log("Opening #" + id + ": ", result)
+                return res.send(200).end()
             }, (error) => {
                 console.log("Error opening #" + id + ": ", error)
+                return res.send(500).end()
             })
         }
     } else {
