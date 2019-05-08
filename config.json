@@ -1,10 +1,17 @@
 {
+    "enableAlexa": true,
+    "garages": {
+        "a": {
+            "code": 1234,
+            "synonyms": []
+        },
+        "b": {
+            "code": 5678,
+            "synonyms": []
+        }
+    },
     "port": 33440,
     "password": "",
     "transmitterPin": 0,
-    "pulseLength": 500,
-    "codes": {
-        "a": 1234,
-        "b": 5678
-    }
+    "pulseLength": 500
 }

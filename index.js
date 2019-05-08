@@ -1,33 +1,30 @@
 const config = require('./config.json')
+const { sendCode, findGarage } = require('./helper.js')
 
 const express = require('express')
-const rpi433 = require('rpi-433')
 
 const {
     port, password,
-    transmitterPin, pulseLength,
-    codes
+    garages
 } = config
 
 const app = express()
-const rfEmitter = rpi433.emitter({
-    pin: transmitterPin,
-    pulseLength
-})
+
+if(config.enableAlexa) {
+    const alexa = require('./alexa.js')
+    alexa.express({
+        expressApp: app
+    })
+}
 
 app.post('/open/:id', (req, res) => {
     const id = req.params.id.toLowerCase()
-    const code = codes[id]
+    const { code } = garages[id]
     if(req.query['password'] === password) {
         if(code) {
-            return rfEmitter.sendCode(code)
-            .then((result) => {
-                console.log("Opening #" + id + ": ", result)
-                return res.send(200).end()
-            }, (error) => {
-                console.log("Error opening #" + id + ": ", error)
-                return res.send(500).end()
-            })
+            return sendCode(code)
+            .then(() => res.status(200).end())
+            .catch(() => res.status(500).end())
         }
     } else {
         return res.status(403).end()
