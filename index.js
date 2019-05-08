@@ -1,4 +1,5 @@
 const {
+    enableAlexa,
     port, password,
     transmitterPin, pulseLength,
     garages
@@ -15,7 +16,7 @@ const rfEmitter = rpi433.emitter({
 
 const app = express()
 
-if(config.enableAlexa) {
+if(enableAlexa) {
     const alexa = new AlexaApp('alexa')
 
     alexa.launch(function(req, res) {
