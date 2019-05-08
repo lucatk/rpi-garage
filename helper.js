@@ -11,13 +11,7 @@ if (!Object.entries) {
 }
 
 const config = require('./config.json')
-const { garages, transmitterPin, pulseLength } = config
-
-const rpi433 = require('rpi-433')
-const rfEmitter = rpi433.emitter({
-    pin: transmitterPin,
-    pulseLength
-})
+const { garages } = config
 
 module.exports = {
     findGarage: (query) => {
@@ -27,17 +21,5 @@ module.exports = {
         if(result) {
             return result[1]
         }
-    },
-    sendCode: (code) => {
-        return new Promise((resolve, reject) => {
-            rfEmitter.sendCode(code)
-            .then((result) => {
-                console.log("Opening #" + id + ": ", result)
-                resolve()
-            }, (error) => {
-                console.log("Error opening #" + id + ": ", error)
-                reject()
-            })
-        })
     }
 }
