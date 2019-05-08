@@ -11,6 +11,8 @@
         }
     },
     "port": 33440,
+    "sslCertificate": "ssl-cert.pem",
+    "privateKey": "private-key.pem",
     "password": "",
     "transmitterPin": 0,
     "pulseLength": 500

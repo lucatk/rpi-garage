@@ -1,12 +1,13 @@
 const {
     enableAlexa,
-    port, password,
+    port, password, sslCertificate, privateKey
     transmitterPin, pulseLength,
     garages
 } = require('./config.json')
 const { findGarage } = require('./helper.js')
 
 const express = require('express')
+const https = require('https')
 const AlexaApp = require('alexa-app').app
 const rpi433 = require('rpi-433')
 const rfEmitter = rpi433.emitter({
@@ -82,4 +83,12 @@ app.post('/open/:id', (req, res) => {
     }
 })
 
-app.listen(port, () => console.log(`Listening on port ${port}!`))
+const fs = require('fs')
+const key = fs.readFileSync('./' + privatKey)
+const cert = fs.readFileSync('./' + sslCertificate)
+
+const server = https.createServer({
+    key: key,
+    cert: cert
+}, app)
+server.listen(port, () => console.log(`Listening on port ${port}!`))
