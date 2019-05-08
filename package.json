@@ -12,6 +12,7 @@
   "dependencies": {
     "alexa-app": "^4.2.3",
     "express": "^4.16.4",
+    "morgan": "^1.9.1",
     "rpi-433": "^2.1.0"
   }
 }
