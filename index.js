@@ -42,7 +42,15 @@ if(enableAlexa) {
     const alexa = new AlexaApp('alexa')
 
     alexa.launch(function(req, res) {
-        res.say('Welche Garage möchtest du öffnen?')
+        // res.say('Welche Garage möchtest du öffnen?')
+        res.directive({
+            type: 'Dialog.Delegate',
+            updatedIntent: {
+                name: 'GarageIntent',
+                confirmationStatus: 'NONE',
+                slots: {}
+            }
+        })
     })
     alexa.customSlot('garage', Object.keys(garages).map((key) => (
         {
@@ -60,7 +68,8 @@ if(enableAlexa) {
             "{GARAGE} schließen",
             "{GARAGE} auf",
             "{GARAGE} zu",
-            "{GARAGE} stopp"
+            "{GARAGE} stopp",
+            "{GARAGE}"
         ]
     }, function(req, res) {
         const garageQuery = req.slot('GARAGE')
@@ -68,12 +77,12 @@ if(enableAlexa) {
         console.log(garageQuery)
         console.log(garage)
         if(garage) {
-            rfEmitter.sendCode(garage.code)
-            .then((result) => {
-                console.log("Opening #" + id + ": ", result)
-            }, (error) => {
-                console.log("Error opening #" + id + ": ", error)
-            })
+            // rfEmitter.sendCode(garage.code)
+            // .then((result) => {
+            //     console.log("Opening #" + id + ": ", result)
+            // }, (error) => {
+            //     console.log("Error opening #" + id + ": ", error)
+            // })
             res.say('Okay')
         } else {
             res.say('Ich kenne leider keine Garage mit diesem Namen')
@@ -86,7 +95,8 @@ if(enableAlexa) {
     alexaExpress.use(morgan('dev'))
 
     alexa.express({
-        expressApp: alexaExpress
+        expressApp: alexaExpress,
+        checkCert: false
     })
 
     const fs = require('fs')
@@ -95,7 +105,7 @@ if(enableAlexa) {
 
     const server = https.createServer({
         key: key,
-        cert: alexaExpress
-    }, app)
+        cert: cert
+    }, alexaExpress)
     server.listen(443, () => console.log(`[Alexa] Listening on port 443!`))
 }
