@@ -44,11 +44,11 @@ if(enableAlexa) {
     alexa.launch(function(req, res) {
         // res.say('Welche Garage möchtest du öffnen?')
         res.directive({
-            type: 'Dialog.Delegate',
+            type: 'Dialog.ElicitSlot',
+            slotToElicit: 'GARAGE',
             updatedIntent: {
                 name: 'GarageIntent',
-                confirmationStatus: 'NONE',
-                slots: {}
+                confirmationStatus: 'NONE'
             }
         })
     })
