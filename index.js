@@ -44,13 +44,13 @@ if(enableAlexa) {
     alexa.launch(function(req, res) {
         // res.say('Welche Garage möchtest du öffnen?')
         res.directive({
-            type: 'Dialog.ElicitSlot',
-            slotToElicit: 'GARAGE',
+            type: 'Dialog.Delegate',
             updatedIntent: {
                 name: 'GarageIntent',
-                confirmationStatus: 'NONE'
+                confirmationStatus: 'NONE',
+                slots: {}
             }
-        }).say('Hi').reprompt('Wieder')
+        })
     })
     alexa.customSlot('garage', Object.keys(garages).map((key) => (
         {
@@ -72,6 +72,7 @@ if(enableAlexa) {
             "{GARAGE}"
         ]
     }, function(req, res) {
+        console.log(req.getDialog())
         const garageQuery = req.slot('GARAGE')
         const garage = findGarage(garageQuery)
         console.log(garageQuery)
