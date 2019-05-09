@@ -50,7 +50,7 @@ if(enableAlexa) {
                 name: 'GarageIntent',
                 confirmationStatus: 'NONE'
             }
-        })
+        }).say('Hi').reprompt('Wieder')
     })
     alexa.customSlot('garage', Object.keys(garages).map((key) => (
         {
